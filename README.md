@@ -1,1 +1,1 @@
-# Production Ready Highly Available Infrastructure setup on AWS using Terraform &amp; Jenkins
+# Production Ready Highly Available Infrastructure Setup on AWS for multiple customers using Terraform Modules & Jenkins
