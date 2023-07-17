@@ -25,7 +25,7 @@ resource "aws_launch_template" "master-custom-launch-template" {
   instance_type           = var.master_instance_type
   vpc_security_group_ids  = [var.master_security_group]
   key_name                = var.key_name
-  user_data               = filebase64("/Users/dhruvins/Desktop/Infrastructure_Provisioing_Terraform/Infrastructure_Definition/bin/master.sh")
+  user_data               = filebase64("/Users/dhruvins/Desktop/Terraform_Infrastructure_Provisioning/Infrastructure_Definition/bin/master.sh")
   update_default_version  = true
   disable_api_termination = true
 
@@ -69,7 +69,7 @@ resource "aws_launch_template" "idx-custom-launch-template" {
   instance_type           = var.idx_instance_type
   vpc_security_group_ids  = [var.alb_security_group]
   key_name                = var.key_name
-  user_data               = filebase64("/Users/dhruvins/Desktop/Infrastructure_Provisioing_Terraform/Infrastructure_Definition/bin/puppet.sh")
+  user_data               = filebase64("/Users/dhruvins/Desktop/Terraform_Infrastructure_Provisioning/Infrastructure_Definition/bin/puppet.sh")
   update_default_version  = true
   disable_api_termination = true
 
@@ -101,7 +101,7 @@ resource "aws_autoscaling_group" "idx-custom-autoscaling-group" {
     propagate_at_launch = true
   }
   tag {
-    key                 = "AnsibleEnv"
+    key                 = "PuppetEnv"
     value               = "production"
     propagate_at_launch = true
   }
@@ -119,7 +119,7 @@ resource "aws_launch_template" "sh-custom-launch-template" {
   instance_type           = var.sh_instance_type
   vpc_security_group_ids  = [var.sh_security_group]
   key_name                = var.key_name
-  user_data               = filebase64("/Users/dhruvins/Desktop/Infrastructure_Provisioing_Terraform/Infrastructure_Definition/bin/puppet.sh")
+  user_data               = filebase64("/Users/dhruvins/Desktop/Terraform_Infrastructure_Provisioning/Infrastructure_Definition/bin/puppet.sh")
   update_default_version  = true
   disable_api_termination = true
 
@@ -150,7 +150,7 @@ resource "aws_autoscaling_group" "sh-custom-autoscaling-group" {
     propagate_at_launch = true
   }
   tag {
-    key                 = "AnsibleEnv"
+    key                 = "PuppetEnv"
     value               = "production"
     propagate_at_launch = true
   }
@@ -168,7 +168,7 @@ resource "aws_launch_template" "hf-custom-launch-template" {
   instance_type           = var.hf_instance_type
   vpc_security_group_ids  = [var.hf_security_group]
   key_name                = var.key_name
-  user_data               = filebase64("/Users/dhruvins/Desktop/Infrastructure_Provisioing_Terraform/Infrastructure_Definition/bin/puppet.sh")
+  user_data               = filebase64("/Users/dhruvins/Desktop/Terraform_Infrastructure_Provisioning/Infrastructure_Definition/bin/puppet.sh")
   update_default_version  = true
   disable_api_termination = true
 
@@ -199,7 +199,7 @@ resource "aws_autoscaling_group" "hf-custom-autoscaling-group" {
     propagate_at_launch = true
   }
   tag {
-    key                 = "AnsibleEnv"
+    key                 = "PuppetEnv"
     value               = "production"
     propagate_at_launch = true
   }
@@ -217,7 +217,7 @@ resource "aws_launch_template" "dp-custom-launch-template" {
   instance_type           = var.dp_instance_type
   vpc_security_group_ids  = [var.dp_security_group]
   key_name                = var.key_name
-  user_data               = filebase64("/Users/dhruvins/Desktop/Infrastructure_Provisioing_Terraform/Infrastructure_Definition/bin/puppet.sh")
+  user_data               = filebase64("/Users/dhruvins/Desktop/Terraform_Infrastructure_Provisioning/Infrastructure_Definition/bin/puppet.sh")
   update_default_version  = true
   disable_api_termination = true
 
@@ -248,7 +248,7 @@ resource "aws_autoscaling_group" "dp-custom-autoscaling-group" {
     propagate_at_launch = true
   }
   tag {
-    key                 = "AnsibleEnv"
+    key                 = "PuppetEnv"
     value               = "production"
     propagate_at_launch = true
   }

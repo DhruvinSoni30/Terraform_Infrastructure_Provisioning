@@ -4,21 +4,10 @@ data "aws_vpc" "default" {
 }
 
 # Using data block fetching the default subnets from AWS
-data "aws_subnet_ids" "default" {
-  vpc_id = data.aws_vpc.default.id
+data "aws_subnets" "default" {
 }
 
-# Using data block fetching the default internet gateway from AWS
-data "aws_internet_gateway" "default" {
-  vpc_id = data.aws_vpc.default.id
-}
-
-# Using data block fetching the default route table from AWS
-data "aws_route_table" "default" {
-  vpc_id = data.aws_vpc.default.id
-}
-
-# Using data block fetching the default NACL from AWS
-data "aws_network_acl" "default" {
-  vpc_id = data.aws_vpc.default.id
+data "aws_subnet" "subnet_id" {
+  count = "${length(data.aws_subnets.default.ids)}"
+  id    = "${tolist(data.aws_subnets.default.ids)[count.index]}"
 }
