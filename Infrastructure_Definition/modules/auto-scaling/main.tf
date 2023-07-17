@@ -485,7 +485,7 @@ resource "aws_ebs_volume" "sh-volume" {
   type              = "gp2"
   tags = {
     Snapshot = "true"
-    Name = "SH Volume"
+    Name = "${var.project_name}-SH Volume"
   }
 }
 
@@ -504,7 +504,7 @@ resource "aws_ebs_volume" "master-volume" {
   type              = "gp2"
   tags = {
     Snapshot = "true"
-    Name = "Master Volume"
+    Name = "${var.project_name}-Master Volume"
   }
 }
 
@@ -524,7 +524,7 @@ resource "aws_ebs_volume" "hf-volume" {
   type              = "gp2"
   tags = {
     Snapshot = "true"
-    Name = "HF Volume"
+    Name = "${var.project_name}-HF Volume"
   }
 }
 
@@ -543,7 +543,7 @@ resource "aws_ebs_volume" "dp-volume" {
   type              = "gp2"
   tags = {
     Snapshot = "true"
-    Name = "DP Volume"
+    Name = "${var.project_name}-DP Volume"
   }
 }
 
@@ -563,7 +563,7 @@ resource "aws_ebs_volume" "idx-volume" {
   type              = "gp2"
   tags = {
     Snapshot = "true"
-    Name = "Idx Volume"
+    Name = "${var.project_name}-Idx Volume"
   }
 }
 
