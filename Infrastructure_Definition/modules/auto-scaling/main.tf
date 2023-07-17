@@ -51,7 +51,7 @@ resource "aws_autoscaling_group" "master-custom-autoscaling-group" {
   desired_capacity = var.master_desired_capacity
 
   tag {
-    key                 = "roles"
+    key                 = "role"
     value               = "Master"
     propagate_at_launch = true
   }
@@ -406,7 +406,7 @@ resource "aws_eip_association" "sh_eip_association" {
 # Fetching Master Node
 data "aws_instance" "master_instance" {
   filter {
-    name   = "tag:roles"
+    name   = "tag:role"
     values = ["Master"]
   }
 
