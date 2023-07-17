@@ -51,7 +51,7 @@ resource "aws_autoscaling_group" "master-custom-autoscaling-group" {
   desired_capacity = var.master_desired_capacity
 
   tag {
-    key                 = "roles"
+    key                 = "role"
     value               = "Master"
     propagate_at_launch = true
   }
