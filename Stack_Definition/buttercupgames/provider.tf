@@ -1,3 +1,8 @@
+# locals
+locals {
+  key = var.project_name
+}
+
 # configure aws provider
 provider "aws" {
   region  = var.region

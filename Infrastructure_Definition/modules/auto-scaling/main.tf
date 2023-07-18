@@ -406,7 +406,7 @@ resource "aws_eip_association" "sh_eip_association" {
 # Fetching Master Node
 data "aws_instance" "master_instance" {
   filter {
-    name   = "tag:roles"
+    name   = "tag:role"
     values = ["Master"]
   }
 
