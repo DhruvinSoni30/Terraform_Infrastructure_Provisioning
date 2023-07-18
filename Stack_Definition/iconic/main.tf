@@ -1,9 +1,9 @@
-# Create VPC
+# Creating VPC
 module "vpc" {
   source       = "../../Infrastructure_Definition/modules/vpc"
 }
 
-# Create security group
+# Creating security group
 module "security_groups" {
   source        = "../../Infrastructure_Definition/modules/security-groups"
   vpc_id        = module.vpc.default_vpc_id
@@ -16,7 +16,7 @@ module "security_groups" {
   type          = var.type
 }
 
-# Create ALB
+# Creating ALB
 module "alb" {
   source               = "../../Infrastructure_Definition/modules/alb"
   project_name         = var.project_name
@@ -29,7 +29,7 @@ module "alb" {
   type                 = var.type
 }
 
-# Create ASG
+# Creating ASG
 module "asg" {
   source                  = "../../Infrastructure_Definition/modules/auto-scaling"
   idx_instance_type       = var.idx_instance_type
@@ -64,13 +64,13 @@ module "asg" {
 
 }
 
-# Create key pair
+# Creating key pair
 module "key_pair" {
   source   = "../../Infrastructure_Definition/modules/key_pair"
   key_name = var.key_name
 }
 
-# Create IAM 
+# Creating IAM 
 module "iam" {
   source = "../../Infrastructure_Definition/modules/iam"
 }
