@@ -37,6 +37,6 @@ jobs:
         run: python Infrastructure_Definition/bin/lint.py
       
       - name: executing the provider script
-        if: ${{ git log -1 --name-only --pretty=format:'' | xargs -n1 dirname | sort -u | head -1 | cut -d'/' -f1 == Stack_Definition }}
+        if: git log -1 --name-only --pretty=format:'' | xargs -n1 dirname | sort -u | head -1 | cut -d'/' -f1 == Stack_Definition
         run: sh Infrastructure_Definition/bin/backend.sh
   
