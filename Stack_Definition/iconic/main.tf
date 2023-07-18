@@ -16,7 +16,7 @@ module "security_groups" {
   type          = var.type
 }
 
-# Creating ALB
+# Creating Load Balancer
 module "alb" {
   source               = "../../Infrastructure_Definition/modules/alb"
   project_name         = var.project_name
