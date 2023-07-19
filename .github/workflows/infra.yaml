@@ -49,12 +49,8 @@ jobs:
         id: check_commit
         run: |
             last_commit_folder=$(git log -1 --name-only --pretty=format:'' | xargs -n1 dirname | sort -u | head -1 | cut -d'/' -f1)
-            if [[ $last_commit_folder == "Stack_Definition" ]]; then
-              echo "::set-output name=FOLDER::true"
-            else
-              echo "::set-output name=FOLDER::false"
-            fi 
-    
+            echo "::set-output name=folder::$(dirname "$last_commit_folder")"
+           
       - name: Executing the provider script
-        if: ${{ steps.check_commit.outputs.FOLDER }} == "true"
+        if: ${{ steps.check_commit.outputs.folder }} == 'Stack_Definition'
         run: sh Infrastructure_Definition/bin/backend.sh
