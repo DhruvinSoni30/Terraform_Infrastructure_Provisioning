@@ -42,6 +42,9 @@ jobs:
         run: |
             last_commit_folder=$(git log -1 --name-only --pretty=format:'' | xargs -n1 dirname | sort -u | head -1 | cut -d'/' -f1)
             echo "::set-output name=folder::$(dirname "$last_commit_folder")"
+            if [[ $last_commit_folder == "Stack_Definition" ]]; then
+              sh Infrastructure_Definition/bin/backend.sh
+            fi
             
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -49,7 +52,3 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: "us-east-2"
-      
-      - name: Executing the provider script
-        if: ${{ steps.check_commit.outputs.folder == 'Stack_Definition' }}
-        run: sh Infrastructure_Definition/bin/backend.sh
