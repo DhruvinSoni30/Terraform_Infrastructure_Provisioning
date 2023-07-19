@@ -1,7 +1,7 @@
 # Stack name
-project_name = "iconics"
+project_name = "iconic"
 
-# Indexer's instance type
+# Indexer instance type
 idx_instance_type = "t2.medium"
 
 # SH instance type
