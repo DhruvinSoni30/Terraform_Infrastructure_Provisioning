@@ -33,14 +33,6 @@ jobs:
           pip install pyhcl
           sudo apt update
           sudo apt install awscli -y
-         
-      - name: Configure AWS credentials
-        run: |
-          mkdir -p $HOME/.aws/
-          touch $HOME/.aws/credentials
-          echo "[default]" >> $HOME/.aws/credentials
-          echo "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $HOME/.aws/credentials
-          echo "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $HOME/.aws/credentials
           
       - name: Execute lint script 
         run: python Infrastructure_Definition/bin/lint.py
@@ -56,4 +48,11 @@ jobs:
             fi
 
       - name: Executing the provider script
-        run: sh Infrastructure_Definition/bin/backend.sh
+        if: steps.last_commit.outputs.folder == 'true'
+        run: |
+            mkdir -p $HOME/.aws/ 
+            touch $HOME/.aws/credentials
+            echo "[default]" >> $HOME/.aws/credentials
+            echo "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $HOME/.aws/credentials
+            echo "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $HOME/.aws/credentials
+            sh Infrastructure_Definition/bin/backend.sh
