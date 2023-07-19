@@ -1,5 +1,5 @@
 # Geting the name of directory in which the last commit has done
-DIRNAME=$(git log -1 --pretty=format:'' --name-only | cut -d'/' -f2)
+DIRNAME=$(git log -1 --name-only --pretty=format:'' | xargs -n1 dirname | sort -u | head -1 | cut -d'/' -f2)
 
 # Checking whether the folder already has a file or not 
 file=$(aws s3 ls s3://stack-definition/$DIRNAME/ | grep "provider.tf")
