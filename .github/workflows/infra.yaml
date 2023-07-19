@@ -27,17 +27,23 @@ jobs:
           terraform fmt -diff -write=true -recursive .
           terraform fmt
 
-      - name: install python packages & aws cli
+      - name: Install python packages & aws cli
         run: |
           python -m pip install --upgrade pip
           pip install pyhcl
           sudo apt update
           sudo apt install awscli -y
-
-      - name: execute lint script 
+          
+      - name: Configure AWS credentials
+        run: |
+          echo "[default]" >> $HOME/.aws/credentials
+          echo "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $HOME/.aws/credentials
+          echo "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $HOME
+          
+      - name: Execute lint script 
         run: python Infrastructure_Definition/bin/lint.py
       
-      - name: checking the last commit folder name 
+      - name: Checking the last commit folder name 
         id: last_commit
         run: |
             last_commit=$(git log -1 --name-only --pretty=format:'' | xargs -n1 dirname | sort -u | head -1 | cut -d'/' -f1)
@@ -47,5 +53,5 @@ jobs:
               echo "::set-output name=folder::false"
             fi
 
-      - name: executing the provider script
+      - name: Executing the provider script
         run: sh Infrastructure_Definition/bin/backend.sh
