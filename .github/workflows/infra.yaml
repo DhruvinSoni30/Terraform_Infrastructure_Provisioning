@@ -40,10 +40,7 @@ jobs:
       - name: Checking the last commit folder name 
         id: last_commit
         run: |
-            touch $HOME/log.txt
             last_commit=$(git log -1 --name-only --pretty=format:'' | xargs -n1 dirname | sort -u | head -1 | cut -d'/' -f1)
-            echo $last_commit > log.txt
-            cat log.txt
             if [[ $last_commit == "Stack_Definition" ]]; then
               echo "::set-output name=folder::true"
             else
@@ -51,7 +48,6 @@ jobs:
             fi
 
       - name: Executing the provider script
-        if: steps.last_commit.outputs.folder == 'true'
         run: |
             mkdir -p $HOME/.aws/ 
             touch $HOME/.aws/credentials
