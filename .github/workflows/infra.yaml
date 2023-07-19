@@ -37,22 +37,20 @@ jobs:
       - name: Execute lint script 
         run: python Infrastructure_Definition/bin/lint.py
       
-      - name: Checking the last commit folder name 
-        id: last_commit
-        run: |
-            last_commit=$(git log -1 --name-only --pretty=format:'' | xargs -n1 dirname | sort -u | head -1 | cut -d'/' -f1)
-            if [[ $last_commit == "Stack_Definition" ]]; then
-              echo "::set-output name=folder::true"
-            else
-              echo "::set-output name=folder::false"
-            fi
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: "us-east-2"
-          
-      - name: Executing the provider script
-        run: sh Infrastructure_Definition/bin/backend.sh
+
+      - name: Checking the last commit folder name 
+        id: last_commit
+        run: |
+            last_commit=$(git log -1 --name-only --pretty=format:'' | xargs -n1 dirname | sort -u | head -1 | cut -d'/' -f1)
+            if [[ $last_commit == "Stack_Definition" ]]; then
+              echo "::set-output name=folder::true"
+              sh Infrastructure_Definition/bin/backend.sh
+            else
+              echo "::set-output name=folder::false"
+            fi
