@@ -12,6 +12,8 @@ jobs:
   build:
     name: build
     runs-on: ubuntu-latest
+    outputs: 
+      folder: ${{ steps.check_commit.outputs.last_commit_folder }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -47,8 +49,8 @@ jobs:
       - name: Checking the last commit folder name 
         id: check_commit
         run: |
-            echo "FOLDER=$(git log -1 --name-only --pretty=format:'' | xargs -n1 dirname | sort -u | head -1 | cut -d'/' -f1)" >> $GITHUB_ENV
-        
+            last_commit_folder=$(git log -1 --name-only --pretty=format:'' | xargs -n1 dirname | sort -u | head -1 | cut -d'/' -f1) >> "$GITHUB_OUTPUT" 
+    
       - name: Executing the provider script
-        if: ${{ env.FOLDER == 'Stack_Definition' }}
+        if: ${{ steps.build.outputs.folder == 'Stack_Definition' }}
         run: sh Infrastructure_Definition/bin/backend.sh
