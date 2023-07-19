@@ -41,6 +41,7 @@ jobs:
         id: last_commit
         run: |
             last_commit=$(git log -1 --name-only --pretty=format:'' | xargs -n1 dirname | sort -u | head -1 | cut -d'/' -f1)
+            echo $last_commit
             if [[ $last_commit == "Stack_Definition" ]]; then
               echo "::set-output name=folder::true"
             else
