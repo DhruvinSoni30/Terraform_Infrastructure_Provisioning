@@ -47,13 +47,8 @@ jobs:
       - name: Checking the last commit folder name 
         id: check_commit
         run: |
-            last_commit_folder=$(git log -1 --name-only --pretty=format:'' | xargs -n1 dirname | sort -u | head -1 | cut -d'/' -f1)
-            if [[ $last_commit_folder == "Stack_Definition" ]]; then
-              echo "::set-output name=folder::true"
-            else
-              echo "::set-output name=folder::false"
-            fi
-            
+            echo "last_commit_folder=$(git log -1 --name-only --pretty=format:'' | xargs -n1 dirname | sort -u | head -1 | cut -d'/' -f1)" >> $GITHUB_OUTPUT
+        
       - name: Executing the provider script
-        if: ${{ steps.check_commit.outputs.folder == 'true' }}
+        if: ${{ steps.check_commit.outputs.last_commit_folder == 'Stack_Definition' }}
         run: sh Infrastructure_Definition/bin/backend.sh
