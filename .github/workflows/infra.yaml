@@ -49,7 +49,7 @@ jobs:
         id: check_commit
         run: |
             last_commit_folder=$(git log -1 --name-only --pretty=format:'' | xargs -n1 dirname | sort -u | head -1 | cut -d'/' -f1)
-            echo "::set-output name=folder::$(dirname "$last_commit_folder")"
+            echo "::set-output name=folder::${{ last_commit_folder }} 
            
       - name: Executing the provider script
         if: ${{ steps.check_commit.outputs.folder }} == 'Stack_Definition'
