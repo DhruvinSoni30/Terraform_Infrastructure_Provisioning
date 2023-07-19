@@ -55,5 +55,5 @@ jobs:
             fi
             
       - name: Executing the provider script
-        if: ${{ steps.check_commit.outputs.folder == "true" }}
+        if: ${{ steps.check_commit.outputs.folder == 'true' }}
         run: sh Infrastructure_Definition/bin/backend.sh
