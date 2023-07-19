@@ -36,6 +36,13 @@ jobs:
           
       - name: Execute lint script 
         run: python Infrastructure_Definition/bin/lint.py
+                
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: "us-east-2"
 
       - name: Checking the last commit folder name 
         id: last_commit
@@ -44,11 +51,6 @@ jobs:
             echo "::set-output name=folder::$(dirname "$last_commit_folder")"
             if [[ $last_commit_folder == "Stack_Definition" ]]; then
               sh Infrastructure_Definition/bin/backend.sh
+            else
+              echo "Done" > /dev/null
             fi
-            
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: "us-east-2"
