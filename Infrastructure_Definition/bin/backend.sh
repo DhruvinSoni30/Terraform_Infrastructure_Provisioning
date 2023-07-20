@@ -1,5 +1,6 @@
 # Geting the name of directory in which the last commit has done
 STACKNAME=$(git log --name-only --pretty=format: | awk -F/ 'NR==1{print $2}')
+echo $STACKNAME
 
 # Checking whether the folder already has a file or not 
 file=$(aws s3 ls s3://stack-definition/$STACKNAME/ | grep "provider.tf")
