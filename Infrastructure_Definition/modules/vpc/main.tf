@@ -13,6 +13,6 @@ data "aws_subnets" "default" {
 }
 
 data "aws_subnet" "subnet_id" {
-  count   = length(data.aws_availability_zones.available.names)
-  id    = "${tolist(data.aws_subnets.default.ids)[count.index]}"
+  count = length(data.aws_availability_zones.available.names)
+  id    = tolist(data.aws_subnets.default.ids)[count.index]
 }

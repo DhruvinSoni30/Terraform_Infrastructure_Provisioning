@@ -56,8 +56,8 @@ resource "aws_autoscaling_group" "master-custom-autoscaling-group" {
     propagate_at_launch = true
   }
   tag {
-    key = var.env
-    value = var.type
+    key                 = var.env
+    value               = var.type
     propagate_at_launch = true
   }
 }
@@ -106,8 +106,8 @@ resource "aws_autoscaling_group" "idx-custom-autoscaling-group" {
     propagate_at_launch = true
   }
   tag {
-    key = var.env
-    value = var.type
+    key                 = var.env
+    value               = var.type
     propagate_at_launch = true
   }
 }
@@ -155,8 +155,8 @@ resource "aws_autoscaling_group" "sh-custom-autoscaling-group" {
     propagate_at_launch = true
   }
   tag {
-    key = var.env
-    value = var.type
+    key                 = var.env
+    value               = var.type
     propagate_at_launch = true
   }
 }
@@ -204,8 +204,8 @@ resource "aws_autoscaling_group" "hf-custom-autoscaling-group" {
     propagate_at_launch = true
   }
   tag {
-    key = var.env
-    value = var.type
+    key                 = var.env
+    value               = var.type
     propagate_at_launch = true
   }
 }
@@ -253,8 +253,8 @@ resource "aws_autoscaling_group" "dp-custom-autoscaling-group" {
     propagate_at_launch = true
   }
   tag {
-    key = var.env
-    value = var.type
+    key                 = var.env
+    value               = var.type
     propagate_at_launch = true
   }
 }
@@ -350,7 +350,7 @@ resource "aws_dlm_lifecycle_policy" "example" {
 
 # Creating EIPs for Indexers
 resource "aws_eip" "idx-eips" {
-  count = aws_autoscaling_group.idx-custom-autoscaling-group.desired_capacity
+  count  = aws_autoscaling_group.idx-custom-autoscaling-group.desired_capacity
   domain = "vpc"
   lifecycle {
     create_before_destroy = true
@@ -485,7 +485,7 @@ resource "aws_ebs_volume" "sh-volume" {
   type              = "gp2"
   tags = {
     Snapshot = "true"
-    Name = "${var.project_name}-SH Volume"
+    Name     = "${var.project_name}-SH Volume"
   }
 }
 
@@ -504,7 +504,7 @@ resource "aws_ebs_volume" "master-volume" {
   type              = "gp2"
   tags = {
     Snapshot = "true"
-    Name = "${var.project_name}-Master Volume"
+    Name     = "${var.project_name}-Master Volume"
   }
 }
 
@@ -524,7 +524,7 @@ resource "aws_ebs_volume" "hf-volume" {
   type              = "gp2"
   tags = {
     Snapshot = "true"
-    Name = "${var.project_name}-HF Volume"
+    Name     = "${var.project_name}-HF Volume"
   }
 }
 
@@ -543,7 +543,7 @@ resource "aws_ebs_volume" "dp-volume" {
   type              = "gp2"
   tags = {
     Snapshot = "true"
-    Name = "${var.project_name}-DP Volume"
+    Name     = "${var.project_name}-DP Volume"
   }
 }
 
@@ -563,7 +563,7 @@ resource "aws_ebs_volume" "idx-volume" {
   type              = "gp2"
   tags = {
     Snapshot = "true"
-    Name = "${var.project_name}-Idx Volume"
+    Name     = "${var.project_name}-Idx Volume"
   }
 }
 

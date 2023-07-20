@@ -1,6 +1,6 @@
 # Creating VPC
 module "vpc" {
-  source       = "../../Infrastructure_Definition/modules/vpc"
+  source = "../../Infrastructure_Definition/modules/vpc"
 }
 
 # Creating security group
