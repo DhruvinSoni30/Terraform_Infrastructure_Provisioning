@@ -41,22 +41,12 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: "us-east-2"
-          
-      - name: get changed files
-        id: getfile
-        run: |
-          echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | head -1 )"
-     
-      - name: echo output
-        run: |
-           echo ${{ steps.getfile.outputs.files }}
 
       - name: Checking the last commit folder name 
         id: check_commit
         run: |
-            LAST_COMMIT_SHA=$(git rev-parse origin/main)
-            echo $LAST_COMMIT_SHA
-            echo "::set-output name=folder::$(git diff-tree --no-commit-id --name-only -r $LAST_COMMIT_SHA | head -1 | cut -d'/' -f1)"
+            folder=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
+            echo $folder
           
       - name: Executing the provider script
         if: ${{ steps.check_commit.outputs.folder }} == 'Stack_Definition'
