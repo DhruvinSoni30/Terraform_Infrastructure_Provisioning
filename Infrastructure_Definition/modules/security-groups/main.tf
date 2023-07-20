@@ -1,6 +1,6 @@
 # Creating Security Group for the Indexers
 resource "aws_security_group" "alb_security_group" {
-  name   = "alb security group"
+  name   = "${var.project_name}-alb security group"
   vpc_id = var.vpc_id
 
   ingress {
@@ -84,7 +84,7 @@ resource "aws_security_group" "alb_security_group" {
 
 # Creating Security Group for the Search Head 
 resource "aws_security_group" "sh_security_group" {
-  name   = "SH security group"
+  name   = "${var.project_name}-SH security group"
   vpc_id = var.vpc_id
 
   ingress {
@@ -144,7 +144,7 @@ resource "aws_security_group" "sh_security_group" {
 
 # Creating Security Group for the Forwarder
 resource "aws_security_group" "hf_security_group" {
-  name   = "HF security group"
+  name   = "${var.project_name}-HF security group"
   vpc_id = var.vpc_id
 
   ingress {
@@ -204,7 +204,7 @@ resource "aws_security_group" "hf_security_group" {
 
 # Creating Security Group for the Deployer 
 resource "aws_security_group" "dp_security_group" {
-  name   = "DP security group"
+  name   = "${var.project_name}-DP security group"
   vpc_id = var.vpc_id
 
   ingress {
@@ -264,7 +264,7 @@ resource "aws_security_group" "dp_security_group" {
 
 # Creating Security Group for the Master Node
 resource "aws_security_group" "master_security_group" {
-  name   = "Master security group"
+  name   = "${var.project_name}-Master security group"
   vpc_id = var.vpc_id
 
   ingress {
