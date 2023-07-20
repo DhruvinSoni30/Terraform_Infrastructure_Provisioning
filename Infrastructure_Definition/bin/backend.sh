@@ -1,8 +1,8 @@
+# Getting the current commit's SHA
+LAST_COMMIT_SHA=$(git rev-parse origin/main)
+
 # Geting the name of directory in which the last commit has done
-COMMIT=$(git rev-parse origin/main)
-echo $COMMIT
-STACKNAME=$(git log --name-only --pretty=format: | awk -F/ 'NR==1{print $2}')
-echo $STACKNAME
+STACKNAME=$(git diff-tree --no-commit-id --name-only -r $LAST_COMMIT_SHA | head -1 | cut -d'/' -f2)
 
 # Checking whether the folder already has a file or not 
 file=$(aws s3 ls s3://stack-definition/$STACKNAME/ | grep "provider.tf")
