@@ -1,4 +1,6 @@
 # Geting the name of directory in which the last commit has done
+COMMIT=$(git rev-parse origin/main)
+echo $COMMIT
 STACKNAME=$(git log --name-only --pretty=format: | awk -F/ 'NR==1{print $2}')
 echo $STACKNAME
 
