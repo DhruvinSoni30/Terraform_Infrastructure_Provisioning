@@ -1,4 +1,8 @@
-STACKNAME=$(git diff-tree --no-commit-id --name-only -r ${{ GITHUB.SHA }} | head -1 | cut -d'/' -f2)
+# Getting the current commit's SHA
+LAST_COMMIT_SHA=$(git rev-parse origin/main)
+echo $LAST_COMMIT_SHA
+
+STACKNAME=$(git diff-tree --no-commit-id --name-only -r $LAST_COMMIT_SHA)
 echo $STACKNAME
 
 # Checking whether the folder already has a file or not 
