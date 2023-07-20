@@ -2,8 +2,8 @@ name: 'Infrastructure - Production'
 
 on:
   push:
-    branches:
-    - main
+    paths:
+      - 'Stack_Definition/**'
 
 jobs:
   build:
