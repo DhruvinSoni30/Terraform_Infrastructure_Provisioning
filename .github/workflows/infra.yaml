@@ -41,6 +41,15 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: "us-east-2"
+          
+      - name: get changed files
+        id: getfile
+        run: |
+          echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"
+     
+      - name: echo output
+        run: |
+           echo ${{ steps.getfile.outputs.files }}
 
       - name: Checking the last commit folder name 
         id: check_commit
