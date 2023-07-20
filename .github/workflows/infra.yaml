@@ -48,7 +48,7 @@ jobs:
       - name: Checking the last commit folder name 
         id: check_commit
         run: |
-            LAST_COMMIT_SHA=$(git show -s --format=%H)
+            LAST_COMMIT_SHA=$(git log -1 --pretty=format:%H)
             echo "::set-output name=folder::$(git diff-tree --no-commit-id --name-only -r $LAST_COMMIT_SHA | head -1 | cut -d'/' -f1)"
           
       - name: Executing the provider script
