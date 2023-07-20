@@ -20,12 +20,6 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.10' 
-      
-      - name: Terraform formate
-        id: formate
-        run: |
-          terraform fmt -diff -write=true -recursive .
-          terraform fmt
 
       - name: Install python packages & aws cli
         run: |
@@ -43,13 +37,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: "us-east-2"
-      
-      - name: Checking the last commit folder name 
-        id: check_commit
-        run: |
-            folder=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | head -1 | cut -d'/' -f1)
-            echo $folder
           
       - name: Executing the provider script
-        if: ${{ steps.check_commit.outputs.folder }} == 'Stack_Definition'
         run: sh Infrastructure_Definition/bin/backend.sh
