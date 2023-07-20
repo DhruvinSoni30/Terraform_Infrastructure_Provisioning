@@ -1,7 +1,7 @@
 # Stack name
 project_name = "dhruvin"
 
-# Indexer instance type
+# Indexer's instance type
 idx_instance_type = "t2.medium"
 
 # SH instance type
