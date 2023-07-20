@@ -47,7 +47,7 @@ jobs:
       - name: Checking the last commit folder name 
         id: check_commit
         run: |
-            folder=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | head -1 | cut -d'/' -f2)
+            folder=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | head -1 | cut -d'/' -f1)
             echo $folder
           
       - name: Executing the provider script
