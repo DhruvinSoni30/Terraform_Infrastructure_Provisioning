@@ -259,9 +259,89 @@ resource "aws_autoscaling_group" "dp-custom-autoscaling-group" {
   }
 }
 
-# Using data block fetching the DLM lifecycle policy from AWS
-data "aws_dlm_lifecycle_policy" "example" {
-  policy_id = "DLM_Policy"
+data "aws_iam_policy_document" "assume_role" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["dlm.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
+}
+
+# Creating IAM Role
+resource "aws_iam_role" "dlm_lifecycle_role" {
+  name               = "dlm-lifecycle-role"
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+}
+
+# Fetching IAM policy document for DLM
+data "aws_iam_policy_document" "dlm_lifecycle" {
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "ec2:CreateSnapshot",
+      "ec2:CreateSnapshots",
+      "ec2:DeleteSnapshot",
+      "ec2:DescribeInstances",
+      "ec2:DescribeVolumes",
+      "ec2:DescribeSnapshots",
+    ]
+
+    resources = ["*"]
+  }
+
+  statement {
+    effect    = "Allow"
+    actions   = ["ec2:CreateTags"]
+    resources = ["arn:aws:ec2:*::snapshot/*"]
+  }
+}
+
+# Creating IAM policy
+resource "aws_iam_role_policy" "dlm_lifecycle" {
+  name   = "${var.project_name}-dlm-lifecycle-policy"
+  role   = aws_iam_role.dlm_lifecycle_role.id
+  policy = data.aws_iam_policy_document.dlm_lifecycle.json
+}
+
+# Creating DLM Policy
+resource "aws_dlm_lifecycle_policy" "example" {
+  description        = "example DLM lifecycle policy"
+  execution_role_arn = aws_iam_role.dlm_lifecycle_role.arn
+  state              = "ENABLED"
+
+  policy_details {
+    resource_types = ["VOLUME"]
+
+    schedule {
+      name = "2 weeks of daily snapshots"
+
+      create_rule {
+        interval      = 24
+        interval_unit = "HOURS"
+        times         = ["23:45"]
+      }
+
+      retain_rule {
+        count = 14
+      }
+
+      tags_to_add = {
+        SnapshotCreator = "DLM"
+      }
+
+      copy_tags = false
+    }
+
+    target_tags = {
+      Snapshot = "true"
+    }
+  }
 }
 
 # Creating EIPs for Indexers
