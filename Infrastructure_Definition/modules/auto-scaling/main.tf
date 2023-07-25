@@ -259,93 +259,9 @@ resource "aws_autoscaling_group" "dp-custom-autoscaling-group" {
   }
 }
 
-# DLM Service Policy Document
-data "aws_iam_policy_document" "assume_role" {
-  statement {
-    effect = "Allow"
-
-    principals {
-      type        = "Service"
-      identifiers = ["dlm.amazonaws.com"]
-    }
-
-    actions = ["sts:AssumeRole"]
-  }
-}
-
-# DLM Policy Role
-resource "aws_iam_role" "dlm_lifecycle_role" {
-  name               = "dlm-lifecycle-role"
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
-}
-
-# DLM Lifecycle Policy for creating auto backup of EBS volumes
-data "aws_iam_policy_document" "dlm_lifecycle" {
-  statement {
-    effect = "Allow"
-
-    actions = [
-      "ec2:CreateSnapshot",
-      "ec2:CreateSnapshots",
-      "ec2:DeleteSnapshot",
-      "ec2:DescribeInstances",
-      "ec2:DescribeVolumes",
-      "ec2:DescribeSnapshots",
-    ]
-
-    resources = ["*"]
-  }
-
-  statement {
-    effect    = "Allow"
-    actions   = ["ec2:CreateTags"]
-    resources = ["arn:aws:ec2:*::snapshot/*"]
-  }
-}
-
-# IAM role for DLM Lifecycle
-resource "aws_iam_role_policy" "dlm_lifecycle" {
-  name   = "dlm-lifecycle-policy"
-  role   = aws_iam_role.dlm_lifecycle_role.id
-  policy = data.aws_iam_policy_document.dlm_lifecycle.json
-}
-
-# IAM policy for Snapshot Creation that will remain for 14 days 
-resource "aws_dlm_lifecycle_policy" "example" {
-  description        = "example DLM lifecycle policy"
-  execution_role_arn = aws_iam_role.dlm_lifecycle_role.arn
-  state              = "ENABLED"
-  tags = {
-    Name = "DLM Policy"
-  }
-
-  policy_details {
-    resource_types = ["VOLUME"]
-
-    schedule {
-      name = "2 weeks of daily snapshots"
-
-      create_rule {
-        interval      = 24
-        interval_unit = "HOURS"
-        times         = ["23:45"]
-      }
-
-      retain_rule {
-        count = 14
-      }
-
-      tags_to_add = {
-        SnapshotCreator = "DLM"
-      }
-
-      copy_tags = false
-    }
-
-    target_tags = {
-      Snapshot = "true"
-    }
-  }
+# Using data block fetching the DLM lifecycle policy from AWS
+data "aws_dlm_lifecycle_policy" "example" {
+  policy_id = "DLM_Policy"
 }
 
 # Creating EIPs for Indexers
