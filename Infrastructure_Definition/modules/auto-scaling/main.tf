@@ -363,7 +363,7 @@ resource "aws_eip" "sh-eip" {
     create_before_destroy = true
   }
   tags = {
-    Name = "Searchhead-EIP"
+    Name = "${var.project_name}-Searchhead-EIP"
   }
 }
 
@@ -374,7 +374,7 @@ resource "aws_eip" "dp-eip" {
     create_before_destroy = true
   }
   tags = {
-    Name = "Deployer-EIP"
+    Name = "${var.project_name}-Deployer-EIP"
   }
 }
 
@@ -485,14 +485,6 @@ resource "aws_ebs_volume" "sh-volume" {
   }
 }
 
-# Attaching volume to Search Head
-resource "aws_volume_attachment" "ebs_sh" {
-  device_name  = "/dev/sdf"
-  volume_id    = aws_ebs_volume.sh-volume.id
-  instance_id  = data.aws_instance.sh_instance.id
-  force_detach = true
-}
-
 # Creating EBS volume for Master Node
 resource "aws_ebs_volume" "master-volume" {
   availability_zone = data.aws_availability_zones.available_zones.names[0]
@@ -503,15 +495,6 @@ resource "aws_ebs_volume" "master-volume" {
     Name     = "${var.project_name}-Master Volume"
   }
 }
-
-# Attaching volume to Master Node
-resource "aws_volume_attachment" "ebs_master" {
-  device_name  = "/dev/sdf"
-  volume_id    = aws_ebs_volume.master-volume.id
-  instance_id  = data.aws_instance.master_instance.id
-  force_detach = true
-}
-
 
 # Creating EBS volume for Forwarder
 resource "aws_ebs_volume" "hf-volume" {
@@ -524,14 +507,6 @@ resource "aws_ebs_volume" "hf-volume" {
   }
 }
 
-# Attaching volume to Forwarder
-resource "aws_volume_attachment" "ebs_hf" {
-  device_name  = "/dev/sdf"
-  volume_id    = aws_ebs_volume.hf-volume.id
-  instance_id  = data.aws_instance.hf_instance.id
-  force_detach = true
-}
-
 # Creating EBS volume for Deployer
 resource "aws_ebs_volume" "dp-volume" {
   availability_zone = data.aws_availability_zones.available_zones.names[2]
@@ -541,14 +516,6 @@ resource "aws_ebs_volume" "dp-volume" {
     Snapshot = "true"
     Name     = "${var.project_name}-DP Volume"
   }
-}
-
-# Attaching volume to Deployer
-resource "aws_volume_attachment" "ebs_dp" {
-  device_name  = "/dev/sdf"
-  volume_id    = aws_ebs_volume.dp-volume.id
-  instance_id  = data.aws_instance.dp_instance.id
-  force_detach = true
 }
 
 # Creating volume for Indexers
@@ -563,11 +530,3 @@ resource "aws_ebs_volume" "idx-volume" {
   }
 }
 
-# Attaching volume to Indexers
-resource "aws_volume_attachment" "ebs_idx" {
-  count        = var.idx_desired_capacity
-  device_name  = "/dev/sdf"
-  volume_id    = aws_ebs_volume.idx-volume.*.id[count.index]
-  instance_id  = data.aws_instances.idx_instance.ids[count.index]
-  force_detach = true
-}
