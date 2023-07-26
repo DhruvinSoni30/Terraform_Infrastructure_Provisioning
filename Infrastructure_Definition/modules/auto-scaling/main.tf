@@ -60,6 +60,11 @@ resource "aws_autoscaling_group" "master-custom-autoscaling-group" {
     value               = var.type
     propagate_at_launch = true
   }
+  tag {
+    key                 = "stack_name"
+    value               = var.project_name
+    propagate_at_launch = true
+  }
 }
 
 # Creating Launch Template for IDX
@@ -108,6 +113,11 @@ resource "aws_autoscaling_group" "idx-custom-autoscaling-group" {
   tag {
     key                 = var.env
     value               = var.type
+    propagate_at_launch = true
+  }
+  tag {
+    key                 = "stack_name"
+    value               = var.project_name
     propagate_at_launch = true
   }
 }
@@ -159,6 +169,11 @@ resource "aws_autoscaling_group" "sh-custom-autoscaling-group" {
     value               = var.type
     propagate_at_launch = true
   }
+  tag {
+    key                 = "stack_name"
+    value               = var.project_name
+    propagate_at_launch = true
+  }
 }
 
 # Creating Launch Template for HF
@@ -206,6 +221,11 @@ resource "aws_autoscaling_group" "hf-custom-autoscaling-group" {
   tag {
     key                 = var.env
     value               = var.type
+    propagate_at_launch = true
+  }
+  tag {
+    key                 = "stack_name"
+    value               = var.project_name
     propagate_at_launch = true
   }
 }
