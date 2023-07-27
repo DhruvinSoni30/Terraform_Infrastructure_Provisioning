@@ -277,6 +277,11 @@ resource "aws_autoscaling_group" "dp-custom-autoscaling-group" {
     value               = var.type
     propagate_at_launch = true
   }
+  tag {
+    key                 = "stack_name"
+    value               = var.project_name
+    propagate_at_launch = true
+  }
 }
 
 data "aws_iam_policy_document" "assume_role" {
@@ -374,6 +379,11 @@ resource "aws_eip" "idx-eips" {
   tags = {
     Name = "Indexers-EIP"
   }
+  tag {
+    key                 = "stack_name"
+    value               = var.project_name
+    propagate_at_launch = true
+  }
 }
 
 # Creating EIP for Search Head
@@ -385,6 +395,11 @@ resource "aws_eip" "sh-eip" {
   tags = {
     Name = "${var.project_name}-Searchhead-EIP"
   }
+  tag {
+    key                 = "stack_name"
+    value               = var.project_name
+    propagate_at_launch = true
+  }
 }
 
 # Creating EIP for Deployer
@@ -395,6 +410,11 @@ resource "aws_eip" "dp-eip" {
   }
   tags = {
     Name = "${var.project_name}-Deployer-EIP"
+  }
+  tag {
+    key                 = "stack_name"
+    value               = var.project_name
+    propagate_at_launch = true
   }
 }
 
@@ -528,6 +548,11 @@ resource "aws_ebs_volume" "sh-volume" {
     Snapshot = "true"
     Name     = "${var.project_name}-SH Volume"
   }
+  tag {
+    key                 = "stack_name"
+    value               = var.project_name
+    propagate_at_launch = true
+  }
 }
 
 # Creating EBS volume for Master Node
@@ -538,6 +563,11 @@ resource "aws_ebs_volume" "master-volume" {
   tags = {
     Snapshot = "true"
     Name     = "${var.project_name}-Master Volume"
+  }
+  tag {
+    key                 = "stack_name"
+    value               = var.project_name
+    propagate_at_launch = true
   }
 }
 
@@ -550,6 +580,11 @@ resource "aws_ebs_volume" "hf-volume" {
     Snapshot = "true"
     Name     = "${var.project_name}-HF Volume"
   }
+  tag {
+    key                 = "stack_name"
+    value               = var.project_name
+    propagate_at_launch = true
+  }
 }
 
 # Creating EBS volume for Deployer
@@ -560,6 +595,11 @@ resource "aws_ebs_volume" "dp-volume" {
   tags = {
     Snapshot = "true"
     Name     = "${var.project_name}-DP Volume"
+  }
+  tag {
+    key                 = "stack_name"
+    value               = var.project_name
+    propagate_at_launch = true
   }
 }
 
@@ -572,6 +612,11 @@ resource "aws_ebs_volume" "idx-volume" {
   tags = {
     Snapshot = "true"
     Name     = "${var.project_name}-Idx Volume"
+  }
+  tag {
+    key                 = "stack_name"
+    value               = var.project_name
+    propagate_at_launch = true
   }
 }
 
