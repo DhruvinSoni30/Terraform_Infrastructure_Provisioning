@@ -11,7 +11,7 @@
   [Production Ready Highly Available Infrastructure Setup on AWS for multiple customers using Terraform Modules & Jenkins: Part 2](https://medium.com/towardsdev/production-ready-highly-available-infrastructure-setup-on-aws-for-multiple-customers-using-725377d33617)
 
 ### Workflow
-![workflow](https://github.com/DhruvinSoni30/Infrastructure_Provisioining_Terraform/blob/main/images/Workflow.png)
+![workflow]([https://github.com/DhruvinSoni30/Infrastructure_Provisioining_Terraform/blob/main/images/Workflow.png](https://github.com/DhruvinSoni30/Terraform_Infrastructure_Provisioning/blob/main/images/Workflow.png))
 
 ### Connect with me:
 [![Connect with me on LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/dhruvinksoni/) [![Open My Medium Profile](https://img.shields.io/badge/Medium-Profile-blue?style=for-the-badge&logo=medium)](https://medium.com/@dksoni4530)
