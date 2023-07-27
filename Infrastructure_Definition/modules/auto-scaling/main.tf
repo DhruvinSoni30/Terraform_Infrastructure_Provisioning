@@ -409,6 +409,11 @@ data "aws_instance" "sh_instance" {
     name   = "instance-state-name"
     values = ["running", "pending"]
   }
+
+  filter {
+    name   = "tag:stack_name"
+    values = ["${var.project_name}"]
+  }
   depends_on = [aws_autoscaling_group.sh-custom-autoscaling-group]
 }
 
@@ -430,6 +435,11 @@ data "aws_instance" "master_instance" {
     name   = "instance-state-name"
     values = ["running", "pending"]
   }
+
+  filter {
+    name   = "tag:stack_name"
+    values = ["${var.project_name}"]
+  }
   depends_on = [aws_autoscaling_group.master-custom-autoscaling-group]
 }
 
@@ -443,6 +453,11 @@ data "aws_instance" "dp_instance" {
   filter {
     name   = "instance-state-name"
     values = ["running", "pending"]
+  }
+
+  filter {
+    name   = "tag:stack_name"
+    values = ["${var.project_name}"]
   }
   depends_on = [aws_autoscaling_group.dp-custom-autoscaling-group]
 }
@@ -470,6 +485,11 @@ data "aws_instances" "idx_instance" {
     name   = "instance-state-name"
     values = ["running", "pending"]
   }
+
+  filter {
+    name   = "tag:stack_name"
+    values = ["${var.project_name}"]
+  }
   depends_on = [aws_autoscaling_group.idx-custom-autoscaling-group]
 }
 
@@ -490,6 +510,11 @@ data "aws_instance" "hf_instance" {
   filter {
     name   = "instance-state-name"
     values = ["running", "pending"]
+  }
+
+  filter {
+    name   = "tag:stack_name"
+    values = ["${var.project_name}"]
   }
   depends_on = [aws_autoscaling_group.hf-custom-autoscaling-group]
 }
