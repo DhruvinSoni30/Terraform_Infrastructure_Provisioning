@@ -24,6 +24,4 @@ module "security_groups" {
 # create VPC
 module "vpc" {
   source = "../Infrastructure_Definition/modules/vpc/"
-  env    = var.env
-  type   = var.type
 }
