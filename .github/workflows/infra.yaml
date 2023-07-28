@@ -46,7 +46,4 @@ jobs:
           
       - name: Executing the provider script
         if: ${{ steps.check_commit.outputs.folder }} == 'Stack_Definition'
-        run: |
-            sh Infrastructure_Definition/bin/backend.sh
-            echo ${{ steps.check_commit.outputs.folder }}
-            
+        run: sh Infrastructure_Definition/bin/backend.sh
