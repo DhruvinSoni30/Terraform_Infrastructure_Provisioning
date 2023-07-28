@@ -1,6 +1,6 @@
 # create ASG for master node
 module "asg" {
-  source                  = "./modules/auto-scalling"
+  source                  = "./modules/auto-scaling"
   master_instance_type    = var.master_instance_type
   public_subnet_az1_id    = module.vpc.public_subnet_az1_id
   master_security_group   = module.security_groups.master_security_group_id
