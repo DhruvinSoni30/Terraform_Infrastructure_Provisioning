@@ -1,4 +1,4 @@
-# Master instance type
+# Master Node instance type
 master_instance_type = "t2.medium"
 
 # Region
