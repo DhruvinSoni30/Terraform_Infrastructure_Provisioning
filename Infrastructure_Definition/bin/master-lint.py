@@ -11,7 +11,7 @@ stack_id_validator = re.compile('[A-Z\s\_]')
 # regex to validate the region
 region_validator = re.compile('(us(-gov)?|ap|ca|cn|eu|sa)-(central|(north|south)?(east|west)?)-?(1|2)')
 
-file = glob.glob('Master_Definition/*/terraform.tfvars')
+file = glob.glob('Master_Definition/terraform.tfvars')
 
 for f in file:
     with open(f, 'r') as fp:
