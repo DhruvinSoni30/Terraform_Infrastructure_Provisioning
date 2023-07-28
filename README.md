@@ -1,11 +1,8 @@
-# Puppet configuration file
+![status](https://img.shields.io/badge/status-up-green) ![uptime](https://img.shields.io/badge/uptime-100%25-green) ![maintainer](https://img.shields.io/badge/maintainer-dhsoni-blue)
+# Production Ready Highly Available Infrastructure Setup on AWS for multiple customers using Terraform Modules & Jenkins
 
-* These are the puppet configuration files for installing splunk and configuring the Deployer, Search Head & Indexer.
+* You just need to create a directory for the stack name & inside that directory create `terraform.tfvars` with the required parameters rest of the things will be managed by automation! 
 
-* In order to setup the cluster we need run below command on the agent nodes: 
 
-    ```puppet agent -t```
-  
-* However, puppet agent will autoatically run every 15 minutes on the agent nodes and pull the latest catalog from master node.
-
-![puppet.png](https://github.com/DhruvinSoni30/Splunk_Infrastructure/blob/main/images/puppet.png)
+### Workflow
+![workflow](https://github.com/DhruvinSoni30/Terraform_Infrastructure_Provisioning/blob/main/images/Workflow.png)
