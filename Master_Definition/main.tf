@@ -2,7 +2,7 @@
 module "asg" {
   source                  = "./modules/auto-scaling"
   master_instance_type    = var.master_instance_type
-  public_subnet_az1_id    = module.vpc.public_subnet_az1_id
+  public_subnet_az1_id    = module.vpc.default_subnet_ids[0]
   master_security_group   = module.security_groups.master_security_group_id
   master_desired_capacity = var.master_desired_capacity
   master_volume_size      = var.master_volume_size
@@ -24,4 +24,10 @@ module "security_groups" {
 # create VPC
 module "vpc" {
   source = "../Infrastructure_Definition/modules/vpc/"
+}
+
+# Create IAM 
+module "iam" {
+  source       = "../Infrastructure_Definition/modules/iam"
+  project_name = var.project_name
 }
