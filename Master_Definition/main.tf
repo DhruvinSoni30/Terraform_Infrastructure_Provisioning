@@ -15,7 +15,7 @@ module "asg" {
 # create security group
 module "security_groups" {
   source     = "./modules/security-group"
-  vpc_id     = module.vpc.vpc_id
+  vpc_id     = module.vpc.default_vpc_id
   ssh_access = var.ssh_access
   env        = var.env
   type       = var.type

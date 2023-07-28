@@ -15,6 +15,11 @@ variable "master_desired_capacity" {
   default = 1
 }
 
+# Master name
+variable "project_name" {
+  type    = string
+}
+
 # Master volume size
 variable "master_volume_size" {
   default = 10
