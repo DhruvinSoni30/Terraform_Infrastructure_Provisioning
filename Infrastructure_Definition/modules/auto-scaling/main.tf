@@ -328,12 +328,7 @@ resource "aws_eip" "idx-eips" {
     create_before_destroy = true
   }
   tags = {
-    Name = "Indexers-EIP"
-  }
-  tag {
-    key                 = "stack_name"
-    value               = var.project_name
-    propagate_at_launch = true
+    Name = "${var.project_name}-Indexers-EIP"
   }
 }
 
@@ -346,11 +341,6 @@ resource "aws_eip" "sh-eip" {
   tags = {
     Name = "${var.project_name}-Searchhead-EIP"
   }
-  tag {
-    key                 = "stack_name"
-    value               = var.project_name
-    propagate_at_launch = true
-  }
 }
 
 # Creating EIP for Deployer
@@ -361,11 +351,6 @@ resource "aws_eip" "dp-eip" {
   }
   tags = {
     Name = "${var.project_name}-Deployer-EIP"
-  }
-  tag {
-    key                 = "stack_name"
-    value               = var.project_name
-    propagate_at_launch = true
   }
 }
 
@@ -480,11 +465,6 @@ resource "aws_ebs_volume" "sh-volume" {
     Snapshot = "true"
     Name     = "${var.project_name}-SH Volume"
   }
-  tag {
-    key                 = "stack_name"
-    value               = var.project_name
-    propagate_at_launch = true
-  }
 }
 
 # Creating EBS volume for Forwarder
@@ -495,11 +475,6 @@ resource "aws_ebs_volume" "hf-volume" {
   tags = {
     Snapshot = "true"
     Name     = "${var.project_name}-HF Volume"
-  }
-  tag {
-    key                 = "stack_name"
-    value               = var.project_name
-    propagate_at_launch = true
   }
 }
 
@@ -512,11 +487,6 @@ resource "aws_ebs_volume" "dp-volume" {
     Snapshot = "true"
     Name     = "${var.project_name}-DP Volume"
   }
-  tag {
-    key                 = "stack_name"
-    value               = var.project_name
-    propagate_at_launch = true
-  }
 }
 
 # Creating volume for Indexers
@@ -528,11 +498,6 @@ resource "aws_ebs_volume" "idx-volume" {
   tags = {
     Snapshot = "true"
     Name     = "${var.project_name}-Idx Volume"
-  }
-  tag {
-    key                 = "stack_name"
-    value               = var.project_name
-    propagate_at_launch = true
   }
 }
 
