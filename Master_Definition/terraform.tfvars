@@ -8,4 +8,4 @@ region = "us-east-2"
 ssh_access = ["0.0.0.0/0"]
 
 # Project Name
-project_name = "Master"
+project_name = "master"
