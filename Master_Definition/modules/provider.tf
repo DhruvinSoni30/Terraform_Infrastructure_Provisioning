@@ -4,11 +4,11 @@ provider "aws" {
   profile = "dhsoni"
 }
 
-# configuring backend
+# configure backend
 terraform {
   backend "s3" {
     bucket         = "dhsoni-terraform"
-    key            = "iconic/terraform.tfstate"
+    key            = "master/terraform.tfstate"
     region         = "us-east-2"
     profile        = "dhsoni"
     dynamodb_table = "terraform-state-lock-dynamodb"
