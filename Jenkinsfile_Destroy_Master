@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    tools {
+        terraform 'terraform'
+    }
+    stages{
+        
+        stage('Git Checkout'){
+            steps{
+                git branch: 'main', credentialsId: 'cred', url: 'https://github.com/DhruvinSoni30/Terraform_Infrastructure_Provisioning'
+            }
+        }
+        
+        stage('Terraform init'){
+            steps{
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]){
+                        sh "cd '${WORKSPACE}/Master_Definition' && terraform init"
+                    }
+            }
+        }
+        stage('Terraform Destroy'){
+            steps{
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]){
+                        sh "cd '${WORKSPACE}/Master_Definition' && terraform destroy -auto-approve"
+                    }
+            }
+        }
+    }
+}
+    
