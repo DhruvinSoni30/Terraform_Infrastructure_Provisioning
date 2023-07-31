@@ -1,0 +1,50 @@
+properties([ parameters([
+  string( name: 'STACK_NAME', defaultValue: ''),
+]), pipelineTriggers([]) ])
+
+env.stack_name = STACK_NAME
+
+pipeline {
+    agent any
+    tools {
+        terraform 'terraform'
+    }
+    stages{
+        
+        stage('Git Checkout'){
+            steps{
+                git branch: 'main', credentialsId: 'cred', url: 'https://github.com/DhruvinSoni30/Terraform_Infrastructure_Provisioning'
+            }
+        }
+        
+        stage('Fetching code'){
+            steps{
+                sh "cd '${WORKSPACE}/Stack_Definition/${env.stack_name}' && aws s3 cp s3://stack-definition/main.tf . && aws s3 cp s3://stack-definition/variables.tf . && aws s3 cp s3://stack-definition/${env.stack_name}/provider.tf ."
+            }
+        }
+        
+        stage('Terraform init'){
+            steps{
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]){
+                        sh "cd '${WORKSPACE}/Stack_Definition/${env.stack_name}' && terraform init"
+                    }
+            }
+        }
+        
+        stage('Terraform destroy'){
+            steps{
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]){
+                        sh "cd '${WORKSPACE}/Stack_Definition/${env.stack_name}' && terraform destroy -auto-approve"
+                    }
+            }
+        }
+    }
+}
